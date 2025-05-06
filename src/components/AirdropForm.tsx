@@ -211,115 +211,127 @@ export default function AirdropForm({
 
   return (
     <div
-      className={`max-w-2xl min-w-full xl:min-w-lg w-full lg:mx-auto p-6 flex flex-col gap-6 bg-white rounded-xl ring-[4px] border-2 ${
-        isUnsafeMode
-          ? " border-red-500 ring-red-500/25"
-          : " border-blue-500 ring-blue-500/25"
-      }`}
+      className={`relative max-w-2xl w-full mx-auto p-6 flex flex-col gap-6
+        rounded-xl border-2 border-transparent ${
+          isUnsafeMode
+            ? " border-red-500 ring-red-500/25"
+            : " border-blue-500 ring-blue-500/25"
+        }`}
     >
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-zinc-900">T-Sender</h2>
-        <Tabs defaultValue={"false"}>
-          <TabsList>
-            <TabsTrigger value={"false"} onClick={() => onModeChange(false)}>
-              Safe Mode
-            </TabsTrigger>
-            <TabsTrigger value={"true"} onClick={() => onModeChange(true)}>
-              Unsafe Mode
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
-
-      <div className="space-y-6">
-        <InputField
-          label="Token Address"
-          placeholder="0x"
-          value={tokenAddress}
-          onChange={(e) => setTokenAddress(e)}
-        />
-        <InputField
-          label="Recipients (comma or new line separated)"
-          placeholder="0x123..., 0x456..."
-          value={recipients}
-          onChange={(e) => setRecipients(e)}
-          large={true}
-        />
-        <InputField
-          label="Amounts (wei; comma or new line separated)"
-          placeholder="100, 200, 300..."
-          value={amounts}
-          onChange={(e) => setAmounts(e)}
-          large={true}
-        />
-
-        <div className="bg-white border border-zinc-300 rounded-lg p-4">
-          <h3 className="text-sm font-medium text-zinc-900 mb-3">
-            Transaction Details
-          </h3>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-zinc-600">Token Name:</span>
-              <span className="font-mono text-zinc-900">
-                {tokenData?.[1]?.result as string}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-zinc-600">Amount (wei):</span>
-              <span className="font-mono text-zinc-900">{total}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-zinc-600">Amount (tokens):</span>
-              <span className="font-mono text-zinc-900">
-                {formatTokenAmount(total, tokenData?.[0]?.result as number)}
-              </span>
-            </div>
-          </div>
+      <div className="absolute inset-0 rounded-xl blur-2xl opacity-50 bg-gradient-to-r from-pink-600 via-violet-600 to-purple-700 -z-10" />
+      <div
+        className="relative bg-[#191B20] bg-opacity-90 rounded-xl p-6
+          flex flex-col gap-6 ring-2 ring-white/10"
+      >
+        <div className="flex items-center justify-between">
+          <h2
+            className="
+   text-3xl font-extrabold
+              bg-clip-text text-transparent
+              bg-gradient-to-r from-[#FF007A] via-[#FF59A1] to-[#FF82B8]
+              bg-[length:200%_200%] animate-gradient-x
+  "
+          >
+            T‑Sender
+          </h2>
+          <Tabs defaultValue={"false"}>
+            <TabsList>
+              <TabsTrigger value={"false"} onClick={() => onModeChange(false)}>
+                Safe Mode
+              </TabsTrigger>
+              <TabsTrigger value={"true"} onClick={() => onModeChange(true)}>
+                Unsafe Mode
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
-        {isUnsafeMode && (
-          <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-lg flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <RiAlertFill size={20} />
-              <span>
-                Using{" "}
-                <span className="font-medium underline underline-offset-2 decoration-2 decoration-red-300">
-                  unsafe
-                </span>{" "}
-                super gas optimized mode
-              </span>
-            </div>
-            <div className="relative group">
-              <RiInformationLine className="cursor-help w-5 h-5 opacity-45" />
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-zinc-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all w-64">
-                This mode skips certain safety checks to optimize for gas. Do
-                not use this mode unless you know how to verify the calldata of
-                your transaction.
-                <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 border-8 border-transparent border-t-zinc-900"></div>
+        <div className="space-y-6">
+          <InputField
+            label="Token Address"
+            placeholder="0x"
+            value={tokenAddress}
+            onChange={(e) => setTokenAddress(e)}
+          />
+          <InputField
+            label="Recipients (comma or new line separated)"
+            placeholder="0x123..., 0x456..."
+            value={recipients}
+            onChange={(e) => setRecipients(e)}
+            large={true}
+          />
+          <InputField
+            label="Amounts (wei; comma or new line separated)"
+            placeholder="100, 200, 300..."
+            value={amounts}
+            onChange={(e) => setAmounts(e)}
+            large={true}
+          />
+
+          <div
+            className="relative bg-[#191B20] bg-opacity-90 rounded-xl p-6
+          flex flex-col gap-6 ring-2 ring-white/70"
+          >
+            <h3 className="text-sm font-medium text-white mb-3">
+              Transaction Details
+            </h3>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-zinc-600">Token Name:</span>
+                <span className="font-mono text-zinc-500">
+                  {tokenData?.[1]?.result as string}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-zinc-600">Amount (wei):</span>
+                <span className="font-mono text-zinc-500">{total}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-zinc-600">Amount (tokens):</span>
+                <span className="font-mono text-zinc-500">
+                  {formatTokenAmount(total, tokenData?.[0]?.result as number)}
+                </span>
               </div>
             </div>
           </div>
-        )}
 
+          {isUnsafeMode && (
+            <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-lg flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <RiAlertFill size={20} />
+                <span>
+                  Using{" "}
+                  <span className="font-medium underline underline-offset-2 decoration-2 decoration-red-300">
+                    unsafe
+                  </span>{" "}
+                  super gas optimized mode
+                </span>
+              </div>
+              <div className="relative group">
+                <RiInformationLine className="cursor-help w-5 h-5 opacity-45" />
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-zinc-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all w-64">
+                  This mode skips certain safety checks to optimize for gas. Do
+                  not use this mode unless you know how to verify the calldata
+                  of your transaction.
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 border-8 border-transparent border-t-zinc-900"></div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* Submit Button */}
         <button
-          className={`cursor-pointer flex items-center justify-center w-full py-3 rounded-[9px] text-white transition-colors font-semibold relative border ${
-            isUnsafeMode
-              ? "bg-red-500 hover:bg-red-600 border-red-500"
-              : "bg-blue-500 hover:bg-blue-600 border-blue-500"
-          } ${
-            !hasEnoughTokens && tokenAddress
-              ? "opacity-50 cursor-not-allowed"
-              : ""
-          }`}
           onClick={handleSubmit}
           disabled={isPending || (!hasEnoughTokens && tokenAddress !== "")}
+          className={`relative flex items-center justify-center w-full py-3 rounded-lg font-semibold uppercase tracking-wide text-white
+    bg-gradient-to-r from-[#FF007A] via-[#FF59A1] to-[#FF82B8]
+    hover:from-[#FF82B8] hover:via-[#FF59A1] hover:to-[#FF007A]
+    transition-transform duration-300
+    transform hover:scale-105 active:scale-95
+    disabled:opacity-50 disabled:cursor-not-allowed
+  
+          `}
         >
-          {/* Gradient */}
-          <div className="absolute w-full inset-0 bg-gradient-to-b from-white/25 via-80% to-transparent mix-blend-overlay z-10 rounded-lg" />
-          {/* Inner shadow */}
-          <div className="absolute w-full inset-0 mix-blend-overlay z-10 inner-shadow rounded-lg" />
-          {/* White inner border */}
-          <div className="absolute w-full inset-0 mix-blend-overlay z-10 border-[1.5px] border-white/20 rounded-lg" />
           {isPending || error || isConfirming
             ? getButtonContent()
             : !hasEnoughTokens && tokenAddress
